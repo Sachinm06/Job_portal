@@ -203,7 +203,6 @@ nav ul li a {
 
 }
 
-/* Restrict body scroll when menu is active */
 .no-scroll {
     overflow: hidden;
     height: 100vh;
@@ -294,14 +293,16 @@ nav ul li a {
     background: white;
     padding: 15px 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
     font-weight: bold;
     text-align: center;
     min-width: 200px;
-    transition: transform 0.3s ease-in-out;
     display: flex;
     gap: 15px;
     border: 1px solid rgba(28, 28, 28, 0.2);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
 }
 
 .job-card img {
@@ -347,47 +348,92 @@ nav ul li a {
     transform: translateY(-5px);
 }
 
-.floating-jobs .job-card {
-    animation: tiltFloat 1.5s ease-in-out infinite both;
+/* Default rotation for each card */
+.job-card:nth-child(1) {
+    transform: rotate(.5deg);
 }
 
-.floating-jobs .job-card:nth-child(1) {
-    animation-delay: 0s;
+.job-card:nth-child(2) {
+    transform: rotate(8deg);
 }
 
-.floating-jobs .job-card:nth-child(2) {
-    animation-delay: 0.3s;
+.job-card:nth-child(3) {
+    transform: rotate(-8deg);
 }
 
-.floating-jobs .job-card:nth-child(3) {
-    animation-delay: 0.6s;
+.job-card:nth-child(4) {
+    transform: rotate(-.5deg);
 }
 
-.floating-jobs .job-card:nth-child(4) {
-    animation-delay: 0.9s;
+/* On Hover: Floating + Scaling + Smooth Rotation */
+.job-card:hover {
+    transform: translateY(-5px) scale(1.05) rotate(0deg);
+    /* Align to normal on hover */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes tiltFloat {
-    0% {
-        transform: translateY(0) rotate(0deg);
-    }
-
-    25% {
-        transform: translateY(-5px) rotate(-5deg);
-    }
-
-    50% {
-        transform: translateY(5px) rotate(5deg);
-    }
-
-    75% {
-        transform: translateY(-5px) rotate(-5deg);
-    }
-
-    100% {
-        transform: translateY(0) rotate(0deg);
-    }
+.job-card {
+    transition: transform 0.5s ease-in-out;
+    /* Smooth transition for both hover-in and hover-out */
 }
+
+.job-card:hover {
+    z-index: 10;
+    transform: translateY(-5px) scale(1.1);
+    /* Floating and Scaling */
+    will-change: transform, filter;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.job-card::after {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 35px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: all 0.6s ease-in-out; }
+
+.floating-jobs .job-card:nth-child(1)::after {
+    background: url('./Asset/Images/banner-arrows/1.png') no-repeat center;
+    left: -50px;
+}
+
+.job-card:nth-child(2)::after {
+    background: url('./Asset/Images/banner-arrows/2.png') no-repeat center;
+    right: -110px;
+}
+
+.job-card:nth-child(3)::after {
+    background: url('./Asset/Images/banner-arrows/3.png') no-repeat center;
+    right: -100px;
+}
+
+.job-card:nth-child(4)::after {
+    background: url('./Asset/Images/banner-arrows/4.png') no-repeat center;
+    left: -50px;
+}
+.floating-jobs .job-card:nth-child(1):hover:after {
+    left: 0px;
+    bottom: -20px;
+
+}
+.floating-jobs .job-card:nth-child(2):hover:after {
+    right: -35px;
+    bottom: -20px;
+}
+.floating-jobs .job-card:nth-child(3):hover:after {
+    right: -35px;
+    bottom: -20px;
+}
+.floating-jobs .job-card:nth-child(4):hover:after {
+    left: 0px;
+    bottom: -20px;
+}
+
+
 
 
 .button {
